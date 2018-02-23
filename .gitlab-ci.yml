@@ -14,10 +14,12 @@ stages:
         - docker:dind
 
     script:
-        - echo ${DISTRO_NAME}:${DISTRO_VER}
-        - echo ${OCI_YML}
         - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${DISTRO_NAME}:${DISTRO_VER}
-        - echo ${IMAGE}
+
+        # - echo ${DISTRO_NAME}:${DISTRO_VER}
+        # - echo ${OCI_YML}
+        # - echo ${IMAGE}
+
         - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
         - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
         - docker push ${IMAGE}
@@ -28,5 +30,28 @@ fedora:latest:
         - export DISTRO_NAME="fedora"
         - export DISTRO_VER="latest"
         - export OCI_YML="cross-distro-images/fedora_latest.yml"
+    <<: *distro_build
 
+fedora:rawhide:
+    stage: distro_image
+    before_script:
+        - export DISTRO_NAME="fedora"
+        - export DISTRO_VER="rawhide"
+        - export OCI_YML="cross-distro-images/fedora_rawhide.yml"
+    <<: *distro_build
+
+debian:testing:
+    stage: distro_image
+    before_script:
+        - export DISTRO_NAME="debian"
+        - export DISTRO_VER="testing"
+        - export OCI_YML="cross-distro-images/debian_testing.yml"
+    <<: *distro_build
+
+opensuse:tumbleweed:
+    stage: distro_image
+    before_script:
+        - export DISTRO_NAME="opensuse"
+        - export DISTRO_VER="tumbleweed"
+        - export OCI_YML="cross-distro-images/opensuse_tumbleweed.yml"
     <<: *distro_build
