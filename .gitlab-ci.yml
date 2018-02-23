@@ -55,3 +55,19 @@ opensuse:tumbleweed:
         - export DISTRO_VER="tumbleweed"
         - export OCI_YML="cross-distro-images/opensuse_tumbleweed.yml"
     <<: *distro_build
+
+rustc:1.24:
+    stage: rustc_image
+    before_script:
+        - export DISTRO_NAME="rustc"
+        - export DISTRO_VER="1.24"
+        - export OCI_YML="rustc_versions/rustc-1-24-0.yml"
+    <<: *distro_build
+
+rustc:1.20:
+    stage: rustc_image
+    before_script:
+        - export DISTRO_NAME="rustc"
+        - export DISTRO_VER="1.20"
+        - export OCI_YML="rustc_versions/rustc-1-20-0.yml"
+    <<: *distro_build
