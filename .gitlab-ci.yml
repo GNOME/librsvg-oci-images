@@ -64,10 +64,50 @@ rustc:1.24:
         - export OCI_YML="rustc_versions/rustc-1-24-0.yml"
     <<: *distro_build
 
+rustc:1.23:
+    stage: rustc_image
+    before_script:
+        - export DISTRO_NAME="rustc"
+        - export DISTRO_VER="1.23"
+        - export OCI_YML="rustc_versions/rustc-1-23-0.yml"
+    <<: *distro_build
+
+rustc:1.22.1:
+    stage: rustc_image
+    before_script:
+        - export DISTRO_NAME="rustc"
+        - export DISTRO_VER="1.22.1"
+        - export OCI_YML="rustc_versions/rustc-1-22-1.yml"
+    <<: *distro_build
+
+rustc:1.21:
+    stage: rustc_image
+    before_script:
+        - export DISTRO_NAME="rustc"
+        - export DISTRO_VER="1.21"
+        - export OCI_YML="rustc_versions/rustc-1-21-0.yml"
+    <<: *distro_build
+
 rustc:1.20:
     stage: rustc_image
     before_script:
         - export DISTRO_NAME="rustc"
         - export DISTRO_VER="1.20"
         - export OCI_YML="rustc_versions/rustc-1-20-0.yml"
+    <<: *distro_build
+
+rustc:1.19:
+    stage: rustc_image
+    before_script:
+        - export DISTRO_NAME="rustc"
+        - export DISTRO_VER="1.19"
+        - export OCI_YML="rustc_versions/rustc-1-19-0.yml"
+    <<: *distro_build
+
+rustc:1.18:
+    stage: rustc_image
+    before_script:
+        - export DISTRO_NAME="rustc"
+        - export DISTRO_VER="1.18"
+        - export OCI_YML="rustc_versions/rustc-1-18-0.yml"
     <<: *distro_build
