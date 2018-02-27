@@ -1,7 +1,7 @@
 FROM i386/debian:testing
 
 RUN apt-get update -yqq && \
-apt-get install -y gcc make rustc cargo \
+apt-get install -y gcc make valac rustc cargo \
 automake autoconf libtool gettext itstool \
 libgdk-pixbuf2.0-dev libgirepository1.0-dev \
 gtk-doc-tools git libgtk-3-dev ccache \
