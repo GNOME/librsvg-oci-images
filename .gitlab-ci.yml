@@ -1,20 +1,19 @@
+image: docker:latest
+services:
+    - docker:dind
+
 stages:
-    - distro_image
+    - distro_image_amd64
+    - distro_image_i386
     - rustc_image
 
+# Expects $ARCH variable which should be the architexcture of the image ex. x86_64
 # Expects $DISTRO_NAME variable which should be the name of the distro image ex. ubuntu
 # Expects $DISTRO_VER variable which should be the version distro image ex. 18.04
 # Expects $OCI_YML variable which should be the path to the dockerfile
 .distro_template: &distro_build
-    variables:
-        IMAGE: ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${DISTRO_NAME}:${DISTRO_VER}
-
-    image: docker:latest
-    services:
-        - docker:dind
-
     script:
-        - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${DISTRO_NAME}:${DISTRO_VER}
+        - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
 
         # - echo ${DISTRO_NAME}:${DISTRO_VER}
         # - echo ${OCI_YML}
@@ -24,75 +23,93 @@ stages:
         - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
         - docker push ${IMAGE}
 
+# Expects $VERSION variable which should be the version of the compiler ex. 1.24
+# Expects $OCI_YML variable which should be the path to the dockerfile
+.rustc_template: &rustc_build
+    script:
+        - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/rustc:${VERSION}
+
+        - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+        - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
+        - docker push ${IMAGE}
+
 fedora:latest:
-    stage: distro_image
+    stage: distro_image_amd64
     before_script:
+        - export ARCH="amd64"
         - export DISTRO_NAME="fedora"
         - export DISTRO_VER="latest"
-        - export OCI_YML="cross-distro-images/fedora_latest.yml"
+        - export OCI_YML="cross_distro_amd64/fedora_latest.yml"
     <<: *distro_build
 
 fedora:rawhide:
-    stage: distro_image
+    stage: distro_image_amd64
     before_script:
+        - export ARCH="amd64"
         - export DISTRO_NAME="fedora"
         - export DISTRO_VER="rawhide"
-        - export OCI_YML="cross-distro-images/fedora_rawhide.yml"
+        - export OCI_YML="cross_distro_amd64/fedora_rawhide.yml"
     <<: *distro_build
 
 debian:testing:
-    stage: distro_image
+    stage: distro_image_amd64
     before_script:
+        - export ARCH="amd64"
         - export DISTRO_NAME="debian"
         - export DISTRO_VER="testing"
-        - export OCI_YML="cross-distro-images/debian_testing.yml"
+        - export OCI_YML="cross_distro_amd64/debian_testing.yml"
     <<: *distro_build
 
 opensuse:tumbleweed:
-    stage: distro_image
+    stage: distro_image_amd64
     before_script:
+        - export ARCH="amd64"
         - export DISTRO_NAME="opensuse"
         - export DISTRO_VER="tumbleweed"
-        - export OCI_YML="cross-distro-images/opensuse_tumbleweed.yml"
+        - export OCI_YML="cross_distro_amd64/opensuse_tumbleweed.yml"
+    <<: *distro_build
+
+debian_i386:testing:
+    stage: distro_image_i386
+    before_script:
+        - export ARCH="i386"
+        - export DISTRO_NAME="debian"
+        - export DISTRO_VER="testing"
+        - export OCI_YML="cross_distro_i386/debian_testing.yml"
     <<: *distro_build
 
 rustc:1.24:
     stage: rustc_image
     before_script:
-        - export DISTRO_NAME="rustc"
-        - export DISTRO_VER="1.24"
+        - export VERSION="1.24"
         - export OCI_YML="rustc_versions/rustc-1-24-0.yml"
-    <<: *distro_build
+    <<: *rustc_build
 
 rustc:1.23:
     stage: rustc_image
     before_script:
-        - export DISTRO_NAME="rustc"
-        - export DISTRO_VER="1.23"
+        - export VERSION="1.23"
         - export OCI_YML="rustc_versions/rustc-1-23-0.yml"
-    <<: *distro_build
+    <<: *rustc_build
 
 rustc:1.22.1:
     stage: rustc_image
     before_script:
-        - export DISTRO_NAME="rustc"
-        - export DISTRO_VER="1.22.1"
+        - export VERSION="1.22.1"
         - export OCI_YML="rustc_versions/rustc-1-22-1.yml"
-    <<: *distro_build
+    <<: *rustc_build
 
 rustc:1.21:
     stage: rustc_image
     before_script:
-        - export DISTRO_NAME="rustc"
-        - export DISTRO_VER="1.21"
+        - export VERSION="1.21"
         - export OCI_YML="rustc_versions/rustc-1-21-0.yml"
-    <<: *distro_build
+    <<: *rustc_build
 
 rustc:1.20:
     stage: rustc_image
     before_script:
-        - export DISTRO_NAME="rustc"
-        - export DISTRO_VER="1.20"
+        - export VERSION="1.20"
         - export OCI_YML="rustc_versions/rustc-1-20-0.yml"
-    <<: *distro_build
+    <<: *rustc_build
 
