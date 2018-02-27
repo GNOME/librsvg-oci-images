@@ -96,18 +96,3 @@ rustc:1.20:
         - export OCI_YML="rustc_versions/rustc-1-20-0.yml"
     <<: *distro_build
 
-rustc:1.19:
-    stage: rustc_image
-    before_script:
-        - export DISTRO_NAME="rustc"
-        - export DISTRO_VER="1.19"
-        - export OCI_YML="rustc_versions/rustc-1-19-0.yml"
-    <<: *distro_build
-
-rustc:1.18:
-    stage: rustc_image
-    before_script:
-        - export DISTRO_NAME="rustc"
-        - export DISTRO_VER="1.18"
-        - export OCI_YML="rustc_versions/rustc-1-18-0.yml"
-    <<: *distro_build
