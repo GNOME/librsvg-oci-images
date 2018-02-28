@@ -1,0 +1,10 @@
+FROM rustlang/rust:nightly 
+
+RUN apt update -yqq && \
+apt-get install -yqq --no-install-recommends libgdk-pixbuf2.0-dev \
+libgirepository1.0-dev gtk-doc-tools git  libgtk-3-dev \
+libxml2-dev libcroco3-dev libcairo2-dev libpango1.0-dev && \
+rm -rf /var/lib/apt/lists/*
+
+RUN cargo install clippy --force
+
