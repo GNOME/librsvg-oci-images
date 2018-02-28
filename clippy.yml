@@ -8,3 +8,5 @@ rm -rf /var/lib/apt/lists/*
 
 RUN cargo install clippy --force
 
+CMD ["cargo", "clippy", "--all"]
+
