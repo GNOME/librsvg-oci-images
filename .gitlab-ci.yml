@@ -22,6 +22,7 @@ stages:
         - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
         - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
         - docker push ${IMAGE}
+    allow_failure: true
 
 # Expects $VERSION variable which should be the version of the compiler ex. 1.24
 # Expects $OCI_YML variable which should be the path to the dockerfile
@@ -32,6 +33,7 @@ stages:
         - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
         - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
         - docker push ${IMAGE}
+    allow_failure: true
 
 fedora:latest:
     stage: distro_image_amd64
