@@ -35,81 +35,91 @@ stages:
 
 fedora:latest:
     stage: distro_image_amd64
-    before_script:
-        - export ARCH="amd64"
-        - export DISTRO_NAME="fedora"
-        - export DISTRO_VER="latest"
-        - export OCI_YML="cross_distro_amd64/fedora_latest.yml"
+    variables:
+      ARCH: "amd64"
+      DISTRO_NAME: "fedora"
+      DISTRO_VER: "latest"
+      OCI_YML: "cross_distro_amd64/fedora_latest.yml"
+
     <<: *distro_build
 
 fedora:rawhide:
     stage: distro_image_amd64
-    before_script:
-        - export ARCH="amd64"
-        - export DISTRO_NAME="fedora"
-        - export DISTRO_VER="rawhide"
-        - export OCI_YML="cross_distro_amd64/fedora_rawhide.yml"
+    variables:
+      ARCH: "amd64"
+      DISTRO_NAME: "fedora"
+      DISTRO_VER: "rawhide"
+      OCI_YML: "cross_distro_amd64/fedora_rawhide.yml"
+
     <<: *distro_build
 
 debian:testing:
     stage: distro_image_amd64
-    before_script:
-        - export ARCH="amd64"
-        - export DISTRO_NAME="debian"
-        - export DISTRO_VER="testing"
-        - export OCI_YML="cross_distro_amd64/debian_testing.yml"
+    variables:
+      ARCH: "amd64"
+      DISTRO_NAME: "debian"
+      DISTRO_VER: "testing"
+      OCI_YML: "cross_distro_amd64/debian_testing.yml"
+
     <<: *distro_build
 
 opensuse:tumbleweed:
     stage: distro_image_amd64
-    before_script:
-        - export ARCH="amd64"
-        - export DISTRO_NAME="opensuse"
-        - export DISTRO_VER="tumbleweed"
-        - export OCI_YML="cross_distro_amd64/opensuse_tumbleweed.yml"
+    variables:
+      ARCH: "amd64"
+      DISTRO_NAME: "opensuse"
+      DISTRO_VER: "tumbleweed"
+      OCI_YML: "cross_distro_amd64/opensuse_tumbleweed.yml"
+
     <<: *distro_build
 
 debian_i386:testing:
     stage: distro_image_i386
-    before_script:
-        - export ARCH="i386"
-        - export DISTRO_NAME="debian"
-        - export DISTRO_VER="testing"
-        - export OCI_YML="cross_distro_i386/debian_testing.yml"
+    variables:
+      ARCH: "i386"
+      DISTRO_NAME: "debian"
+      DISTRO_VER: "testing"
+      OCI_YML: "cross_distro_i386/debian_testing.yml"
+
     <<: *distro_build
 
 rustc:1.24:
     stage: rustc_image
-    before_script:
-        - export VERSION="1.24"
-        - export OCI_YML="rustc_versions/rustc-1-24-0.yml"
+    variables:
+      VERSION: "1.24"
+      OCI_YML: "rustc_versions/rustc-1-24-0.yml"
+
     <<: *rustc_build
 
 rustc:1.23:
     stage: rustc_image
-    before_script:
-        - export VERSION="1.23"
-        - export OCI_YML="rustc_versions/rustc-1-23-0.yml"
+    variables:
+      VERSION: "1.23"
+      OCI_YML: "rustc_versions/rustc-1-23-0.yml"
+
     <<: *rustc_build
 
 rustc:1.22.1:
     stage: rustc_image
-    before_script:
-        - export VERSION="1.22.1"
-        - export OCI_YML="rustc_versions/rustc-1-22-1.yml"
+    variables:
+      VERSION: "1.22.1"
+      OCI_YML: "rustc_versions/rustc-1-22-1.yml"
+
     <<: *rustc_build
 
 rustc:1.21:
     stage: rustc_image
-    before_script:
-        - export VERSION="1.21"
-        - export OCI_YML="rustc_versions/rustc-1-21-0.yml"
+    variables:
+      VERSION: "1.21"
+      OCI_YML: "rustc_versions/rustc-1-21-0.yml"
+
     <<: *rustc_build
 
 rustc:1.20:
     stage: rustc_image
-    before_script:
-        - export VERSION="1.20"
-        - export OCI_YML="rustc_versions/rustc-1-20-0.yml"
+    variables:
+      VERSION: "1.20"
+      OCI_YML: "rustc_versions/rustc-1-20-0.yml"
+
     <<: *rustc_build
 
