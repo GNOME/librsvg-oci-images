@@ -3,9 +3,9 @@ services:
     - docker:dind
 
 stages:
-    - distro_image_amd64
-    - distro_image_i386
-    - rustc_image
+    - amd64
+    - i386
+    - rustc
 
 # Expects $ARCH variable which should be the architexcture of the image ex. x86_64
 # Expects $DISTRO_NAME variable which should be the name of the distro image ex. ubuntu
@@ -36,92 +36,92 @@ stages:
     allow_failure: true
 
 fedora:latest:
-    stage: distro_image_amd64
+    stage: amd64
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
       DISTRO_VER: "latest"
-      OCI_YML: "cross_distro_amd64/fedora_latest.yml"
+      OCI_YML: "amd64/fedora_latest.yml"
 
     <<: *distro_build
 
 fedora:rawhide:
-    stage: distro_image_amd64
+    stage: amd64
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
       DISTRO_VER: "rawhide"
-      OCI_YML: "cross_distro_amd64/fedora_rawhide.yml"
+      OCI_YML: "amd64/fedora_rawhide.yml"
 
     <<: *distro_build
 
 debian:testing:
-    stage: distro_image_amd64
+    stage: amd64
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "debian"
       DISTRO_VER: "testing"
-      OCI_YML: "cross_distro_amd64/debian_testing.yml"
+      OCI_YML: "amd64/debian_testing.yml"
 
     <<: *distro_build
 
 opensuse:tumbleweed:
-    stage: distro_image_amd64
+    stage: amd64
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "opensuse"
       DISTRO_VER: "tumbleweed"
-      OCI_YML: "cross_distro_amd64/opensuse_tumbleweed.yml"
+      OCI_YML: "amd64/opensuse_tumbleweed.yml"
 
     <<: *distro_build
 
 debian_i386:testing:
-    stage: distro_image_i386
+    stage: i386
     variables:
       ARCH: "i386"
       DISTRO_NAME: "debian"
       DISTRO_VER: "testing"
-      OCI_YML: "cross_distro_i386/debian_testing.yml"
+      OCI_YML: "i386/debian_testing.yml"
 
     <<: *distro_build
 
 rustc:1.24:
-    stage: rustc_image
+    stage: rustc
     variables:
       VERSION: "1.24"
-      OCI_YML: "rustc_versions/rustc-1-24-0.yml"
+      OCI_YML: "rustc/v1_24_0.yml"
 
     <<: *rustc_build
 
 rustc:1.23:
-    stage: rustc_image
+    stage: rustc
     variables:
       VERSION: "1.23"
-      OCI_YML: "rustc_versions/rustc-1-23-0.yml"
+      OCI_YML: "rustc/v1_23_0.yml"
 
     <<: *rustc_build
 
 rustc:1.22.1:
-    stage: rustc_image
+    stage: rustc
     variables:
       VERSION: "1.22.1"
-      OCI_YML: "rustc_versions/rustc-1-22-1.yml"
+      OCI_YML: "rustc/v1_22_1.yml"
 
     <<: *rustc_build
 
 rustc:1.21:
-    stage: rustc_image
+    stage: rustc
     variables:
       VERSION: "1.21"
-      OCI_YML: "rustc_versions/rustc-1-21-0.yml"
+      OCI_YML: "rustc/v1_21_0.yml"
 
     <<: *rustc_build
 
 rustc:1.20:
-    stage: rustc_image
+    stage: rustc
     variables:
       VERSION: "1.20"
-      OCI_YML: "rustc_versions/rustc-1-20-0.yml"
+      OCI_YML: "rustc/v1_20_0.yml"
 
     <<: *rustc_build
 
