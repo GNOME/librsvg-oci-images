@@ -7,32 +7,31 @@ stages:
     - i386
     - rustc
 
-# Expects $ARCH variable which should be the architexcture of the image ex. x86_64
-# Expects $DISTRO_NAME variable which should be the name of the distro image ex. ubuntu
-# Expects $DISTRO_VER variable which should be the version distro image ex. 18.04
+# Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $OCI_YML variable which should be the path to the dockerfile
-.distro_template: &distro_build
+.base_template: &base_build
     script:
-        - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
-
-        # - echo ${DISTRO_NAME}:${DISTRO_VER}
-        # - echo ${OCI_YML}
-        # - echo ${IMAGE}
-
         - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
         - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
         - docker push ${IMAGE}
     allow_failure: true
 
+# Expects $ARCH variable which should be the architexcture of the image ex. x86_64
+# Expects $DISTRO_NAME variable which should be the name of the distro image ex. ubuntu
+# Expects $DISTRO_VER variable which should be the version distro image ex. 18.04
+# Expects $OCI_YML variable which should be the path to the dockerfile
+.distro_template: &distro_build
+    before_script:
+        - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
+    <<: *base_build
+    allow_failure: true
+
 # Expects $VERSION variable which should be the version of the compiler ex. 1.24
 # Expects $OCI_YML variable which should be the path to the dockerfile
 .rustc_template: &rustc_build
-    script:
+    before_script:
         - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/rustc:${VERSION}
-
-        - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-        - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
-        - docker push ${IMAGE}
+    <<: *base_build
     allow_failure: true
 
 fedora:latest:
