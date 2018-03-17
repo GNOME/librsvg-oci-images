@@ -74,6 +74,16 @@ opensuse:tumbleweed:
 
     <<: *distro_build
 
+fedora:rawhide:
+    stage: amd64
+    variables:
+      ARCH: "amd64"
+      DISTRO_NAME: "amazon"
+      DISTRO_VER: "2"
+      OCI_YML: "amd64/amazo_linux_2.yml"
+
+    <<: *distro_build
+
 debian_i386:testing:
     stage: i386
     variables:
