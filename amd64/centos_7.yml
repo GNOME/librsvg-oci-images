@@ -1,12 +1,12 @@
-# ALSO DOES NOT WORK, LIEK CENTOS
-FROM amazonlinux:2
+# DOES NOT WORK
+# CAIRO AND FREETYPE NOT IN EPEL
+FROM centos:7
 
-RUN yum install -y gcc make vala \
+RUN yum install -y epel-release
+RUN yum --enablerepo=epel install -y rust rust-std-static gcc make vala \
     automake autoconf libtool gettext itstool \
     gdk-pixbuf2-devel gobject-introspection-devel \
     gtk-doc git redhat-rpm-config gtk3-devel ccache \
     libxml2-devel libcroco-devel cairo-devel pango-devel
 
-RUN amazon-linux-extras install rust1
 RUN yum clean all
-

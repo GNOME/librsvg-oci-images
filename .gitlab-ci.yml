@@ -74,15 +74,27 @@ opensuse:tumbleweed:
 
     <<: *distro_build
 
-amazon:2:
-    stage: amd64
-    variables:
-      ARCH: "amd64"
-      DISTRO_NAME: "amazon"
-      DISTRO_VER: "2"
-      OCI_YML: "amd64/amazon_linux_2.yml"
+# Not usefull while the deps are outdated
+# amazon:2:
+#     stage: amd64
+#     variables:
+#       ARCH: "amd64"
+#       DISTRO_NAME: "amazon"
+#       DISTRO_VER: "2"
+#       OCI_YML: "amd64/amazon_linux_2.yml"
 
-    <<: *distro_build
+#     <<: *distro_build
+
+# Not usefull while the deps are outdated
+# centos:7:
+#     stage: amd64
+#     variables:
+#       ARCH: "amd64"
+#       DISTRO_NAME: "centos"
+#       DISTRO_VER: "7"
+#       OCI_YML: "amd64/centos_7.yml"
+
+#     <<: *distro_build
 
 debian_i386:testing:
     stage: i386
