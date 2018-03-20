@@ -109,8 +109,8 @@ debian_i386:testing:
 rustc:1.24:
     stage: rustc
     variables:
-      VERSION: "1.24"
-      OCI_YML: "rustc/v1_24_0.yml"
+      VERSION: "1.24.1"
+      OCI_YML: "rustc/v1_24_1.yml"
 
     <<: *rustc_build
 
