@@ -1,8 +1,8 @@
 # KEEP IN SYNC WITH:
-# https://github.com/docker-library/gcc/blob/master/6/Dockerfile
+# https://github.com/docker-library/gcc/blob/master/7/Dockerfile
 # It's the same file excpet based on debian:testing instead of buildpapack-deps:stretch
 
-FROM debian:testing
+FROM buildpack-deps:buster
 
 RUN apt-get -yqq update && \
     apt-get install -y make valac \
@@ -42,9 +42,9 @@ RUN set -ex; \
 		gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
 	done
 
-# Last Modified: 2017-07-04
-ENV GCC_VERSION 6.4.0
-# Docker EOL: 2018-07-04
+# Last Modified: 2018-01-25
+ENV GCC_VERSION 7.3.0
+# Docker EOL: 2019-01-25
 
 RUN set -ex; \
 	\
@@ -131,4 +131,4 @@ RUN set -ex; \
 	dpkg-divert --divert /usr/bin/gcc.orig --rename /usr/bin/gcc; \
 	dpkg-divert --divert /usr/bin/g++.orig --rename /usr/bin/g++; \
 	dpkg-divert --divert /usr/bin/gfortran.orig --rename /usr/bin/gfortran; \
-update-alternatives --install /usr/bin/cc cc /usr/local/bin/gcc 999
+    update-alternatives --install /usr/bin/cc cc /usr/local/bin/gcc 999

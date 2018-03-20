@@ -14,7 +14,6 @@ stages:
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
         - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
         - docker push ${IMAGE}
-    allow_failure: true
 
 # Expects $ARCH variable which should be the architexcture of the image ex. x86_64
 # Expects $DISTRO_NAME variable which should be the name of the distro image ex. ubuntu
@@ -105,8 +104,8 @@ rustc:1.24:
     stage: rustc
     variables:
       COMPILER: "rustc"
-      VERSION: "1.24.1"
-      OCI_YML: "rustc/v1_24_1.yml"
+      VERSION: "1.24"
+      OCI_YML: "rustc/v1_24.yml"
 
     <<: *compiler_build
 
@@ -115,16 +114,16 @@ rustc:1.23:
     variables:
       COMPILER: "rustc"
       VERSION: "1.23"
-      OCI_YML: "rustc/v1_23_0.yml"
+      OCI_YML: "rustc/v1_23.yml"
 
     <<: *compiler_build
 
-rustc:1.22.1:
+rustc:1.22:
     stage: rustc
     variables:
       COMPILER: "rustc"
-      VERSION: "1.22.1"
-      OCI_YML: "rustc/v1_22_1.yml"
+      VERSION: "1.22"
+      OCI_YML: "rustc/v1_22.yml"
 
     <<: *compiler_build
 
@@ -133,34 +132,6 @@ rustc:1.21:
     variables:
       COMPILER: "rustc"
       VERSION: "1.21"
-      OCI_YML: "rustc/v1_21_0.yml"
+      OCI_YML: "rustc/v1_21.yml"
 
     <<: *compiler_build
-
-gcc:5:
-    stage: gcc
-    variables:
-      VERSION: "5"
-      COMPILER: "gcc"
-      OCI_YML: "gcc/gcc5.yml"
-
-    <<: *compiler_build
-
-gcc:6:
-    stage: gcc
-    variables:
-      VERSION: "6"
-      COMPILER: "gcc"
-      OCI_YML: "gcc/gcc6.yml"
-
-    <<: *compiler_build
-
-gcc:7:
-    stage: gcc
-    variables:
-      VERSION: "7"
-      COMPILER: "gcc"
-      OCI_YML: "gcc/gcc7.yml"
-
-    <<: *compiler_build
- 
