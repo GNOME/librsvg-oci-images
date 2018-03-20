@@ -3,9 +3,9 @@ services:
     - docker:dind
 
 stages:
-    - amd64
-    - i386
+    - distro
     - rustc
+    - gcc
 
 # Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $OCI_YML variable which should be the path to the dockerfile
@@ -21,21 +21,22 @@ stages:
 # Expects $DISTRO_VER variable which should be the version distro image ex. 18.04
 # Expects $OCI_YML variable which should be the path to the dockerfile
 .distro_template: &distro_build
+    stage: distro
     before_script:
         - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
     <<: *base_build
     allow_failure: true
 
-# Expects $VERSION variable which should be the version of the compiler ex. 1.24
+# Expects $COMPILER variable which should be the name of the compiler ex. rustc/gcc
+# Expects $VERSION variable which should be the version of the compiler ex. 1.24/7
 # Expects $OCI_YML variable which should be the path to the dockerfile
-.rustc_template: &rustc_build
+.compiler_template: &compiler_build
     before_script:
-        - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/rustc:${VERSION}
+        - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${COMPILER}:${VERSION}
     <<: *base_build
     allow_failure: true
 
 fedora:latest:
-    stage: amd64
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
@@ -45,7 +46,6 @@ fedora:latest:
     <<: *distro_build
 
 fedora:rawhide:
-    stage: amd64
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
@@ -55,7 +55,6 @@ fedora:rawhide:
     <<: *distro_build
 
 debian:testing:
-    stage: amd64
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "debian"
@@ -65,7 +64,6 @@ debian:testing:
     <<: *distro_build
 
 opensuse:tumbleweed:
-    stage: amd64
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "opensuse"
@@ -76,7 +74,6 @@ opensuse:tumbleweed:
 
 # Not usefull while the deps are outdated
 # amazon:2:
-#     stage: amd64
 #     variables:
 #       ARCH: "amd64"
 #       DISTRO_NAME: "amazon"
@@ -87,7 +84,6 @@ opensuse:tumbleweed:
 
 # Not usefull while the deps are outdated
 # centos:7:
-#     stage: amd64
 #     variables:
 #       ARCH: "amd64"
 #       DISTRO_NAME: "centos"
@@ -97,7 +93,6 @@ opensuse:tumbleweed:
 #     <<: *distro_build
 
 debian_i386:testing:
-    stage: i386
     variables:
       ARCH: "i386"
       DISTRO_NAME: "debian"
@@ -109,31 +104,63 @@ debian_i386:testing:
 rustc:1.24:
     stage: rustc
     variables:
+      COMPILER: "rustc"
       VERSION: "1.24.1"
       OCI_YML: "rustc/v1_24_1.yml"
 
-    <<: *rustc_build
+    <<: *compiler_build
 
 rustc:1.23:
     stage: rustc
     variables:
+      COMPILER: "rustc"
       VERSION: "1.23"
       OCI_YML: "rustc/v1_23_0.yml"
 
-    <<: *rustc_build
+    <<: *compiler_build
 
 rustc:1.22.1:
     stage: rustc
     variables:
+      COMPILER: "rustc"
       VERSION: "1.22.1"
       OCI_YML: "rustc/v1_22_1.yml"
 
-    <<: *rustc_build
+    <<: *compiler_build
 
 rustc:1.21:
     stage: rustc
     variables:
+      COMPILER: "rustc"
       VERSION: "1.21"
       OCI_YML: "rustc/v1_21_0.yml"
 
-    <<: *rustc_build
+    <<: *compiler_build
+
+gcc:5:
+    stage: gcc
+    variables:
+      VERSION: "5"
+      COMPILER: "gcc"
+      OCI_YML: "gcc/gcc5.yml"
+
+    <<: *compiler_build
+
+gcc:6:
+    stage: gcc
+    variables:
+      VERSION: "6"
+      COMPILER: "gcc"
+      OCI_YML: "gcc/gcc6.yml"
+
+    <<: *compiler_build
+
+gcc:7:
+    stage: gcc
+    variables:
+      VERSION: "7"
+      COMPILER: "gcc"
+      OCI_YML: "gcc/gcc7.yml"
+
+    <<: *compiler_build
+ 
