@@ -137,12 +137,3 @@ rustc:1.21:
       OCI_YML: "rustc/v1_21_0.yml"
 
     <<: *rustc_build
-
-rustc:1.20:
-    stage: rustc
-    variables:
-      VERSION: "1.20"
-      OCI_YML: "rustc/v1_20_0.yml"
-
-    <<: *rustc_build
-
