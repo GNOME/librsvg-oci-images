@@ -5,7 +5,6 @@ services:
 stages:
     - distro
     - rustc
-    - gcc
 
 # Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $OCI_YML variable which should be the path to the dockerfile
@@ -71,6 +70,15 @@ opensuse:tumbleweed:
 
     <<: *distro_build
 
+ubuntu:18.04:
+    variables:
+      ARCH: "amd64"
+      DISTRO_NAME: "ubuntu"
+      DISTRO_VER: "18.04"
+      OCI_YML: "amd64/ubuntu_bionic.yml"
+
+    <<: *distro_build
+
 # Not usefull while the deps are outdated
 # amazon:2:
 #     variables:
@@ -97,6 +105,15 @@ debian_i386:testing:
       DISTRO_NAME: "debian"
       DISTRO_VER: "testing"
       OCI_YML: "i386/debian_testing.yml"
+
+    <<: *distro_build
+
+ubuntu_i386:18.04:
+    variables:
+      ARCH: "i386"
+      DISTRO_NAME: "ubuntu"
+      DISTRO_VER: "18.04"
+      OCI_YML: "i386/ubuntu_bionic.yml"
 
     <<: *distro_build
 
