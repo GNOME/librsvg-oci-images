@@ -8,8 +8,10 @@ stages:
 
 # Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $OCI_YML variable which should be the path to the dockerfile
+# Expects $DIR variable which should be the name of the parrent folder of the dockerfile
 .base_template: &base_build
     script:
+        - cd ${DIR}
         - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
         - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
         - docker push ${IMAGE}
@@ -26,11 +28,15 @@ stages:
     allow_failure: true
 
 # Expects $COMPILER variable which should be the name of the compiler ex. rustc/gcc
-# Expects $VERSION variable which should be the version of the compiler ex. 1.24/7
-# Expects $OCI_YML variable which should be the path to the dockerfile
-.compiler_template: &compiler_build
+# Expects $TAG_VERSION variable which should be the version of the compiler minus the minor release ex. 1.24
+# Expects $RUSTC_VERSION variable which should be the version of the compiler ex. 1.24.1
+.rustc_template: &rustc
+    stage: rustc
     before_script:
-        - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${COMPILER}:${VERSION}
+        - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/rustc:${TAG_VERSION}
+        - export OCI_YML=rustc.yml
+        - export DIR=debian/
+        - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" debian/rustc_template > debian/rustc.sh
     <<: *base_build
     allow_failure: true
 
@@ -39,7 +45,8 @@ fedora:latest:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
       DISTRO_VER: "latest"
-      OCI_YML: "amd64/fedora_latest.yml"
+      OCI_YML: "latest.yml"
+      DIR: "fedora"
 
     <<: *distro_build
 
@@ -48,7 +55,8 @@ fedora:rawhide:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
       DISTRO_VER: "rawhide"
-      OCI_YML: "amd64/fedora_rawhide.yml"
+      OCI_YML: "rawhide.yml"
+      DIR: "fedora"
 
     <<: *distro_build
 
@@ -57,7 +65,8 @@ debian:testing:
       ARCH: "amd64"
       DISTRO_NAME: "debian"
       DISTRO_VER: "testing"
-      OCI_YML: "amd64/debian_testing.yml"
+      OCI_YML: "testing.yml"
+      DIR: "debian"
 
     <<: *distro_build
 
@@ -66,7 +75,8 @@ opensuse:tumbleweed:
       ARCH: "amd64"
       DISTRO_NAME: "opensuse"
       DISTRO_VER: "tumbleweed"
-      OCI_YML: "amd64/opensuse_tumbleweed.yml"
+      OCI_YML: "tumbleweed.yml"
+      DIR: "opensuse"
 
     <<: *distro_build
 
@@ -75,36 +85,18 @@ ubuntu:18.04:
       ARCH: "amd64"
       DISTRO_NAME: "ubuntu"
       DISTRO_VER: "18.04"
-      OCI_YML: "amd64/ubuntu_bionic.yml"
+      OCI_YML: "bionic.yml"
+      DIR: "debian"
 
     <<: *distro_build
-
-# Not usefull while the deps are outdated
-# amazon:2:
-#     variables:
-#       ARCH: "amd64"
-#       DISTRO_NAME: "amazon"
-#       DISTRO_VER: "2"
-#       OCI_YML: "amd64/amazon_linux_2.yml"
-
-#     <<: *distro_build
-
-# Not usefull while the deps are outdated
-# centos:7:
-#     variables:
-#       ARCH: "amd64"
-#       DISTRO_NAME: "centos"
-#       DISTRO_VER: "7"
-#       OCI_YML: "amd64/centos_7.yml"
-
-#     <<: *distro_build
 
 debian_i386:testing:
     variables:
       ARCH: "i386"
       DISTRO_NAME: "debian"
       DISTRO_VER: "testing"
-      OCI_YML: "i386/debian_testing.yml"
+      OCI_YML: "i386_testing.yml"
+      DIR: "debian"
 
     <<: *distro_build
 
@@ -113,42 +105,31 @@ ubuntu_i386:18.04:
       ARCH: "i386"
       DISTRO_NAME: "ubuntu"
       DISTRO_VER: "18.04"
-      OCI_YML: "i386/ubuntu_bionic.yml"
+      OCI_YML: "i386_bionic.yml"
+      DIR: "debian"
 
     <<: *distro_build
 
 rustc:1.24:
-    stage: rustc
     variables:
-      COMPILER: "rustc"
-      VERSION: "1.24"
-      OCI_YML: "rustc/v1_24.yml"
-
-    <<: *compiler_build
+      RUSTC_VERSION: "1.24.1"
+      TAG_VERSION: "1.24"
+    <<: *rustc
 
 rustc:1.23:
-    stage: rustc
     variables:
-      COMPILER: "rustc"
-      VERSION: "1.23"
-      OCI_YML: "rustc/v1_23.yml"
-
-    <<: *compiler_build
+      RUSTC_VERSION: "1.23.0"
+      TAG_VERSION: "1.23"
+    <<: *rustc
 
 rustc:1.22:
-    stage: rustc
     variables:
-      COMPILER: "rustc"
-      VERSION: "1.22"
-      OCI_YML: "rustc/v1_22.yml"
-
-    <<: *compiler_build
+      RUSTC_VERSION: "1.22.1"
+      TAG_VERSION: "1.22"
+    <<: *rustc
 
 rustc:1.21:
-    stage: rustc
     variables:
-      COMPILER: "rustc"
-      VERSION: "1.21"
-      OCI_YML: "rustc/v1_21.yml"
-
-    <<: *compiler_build
+      RUSTC_VERSION: "1.21.0"
+      TAG_VERSION: "1.21"
+    <<: *rustc
