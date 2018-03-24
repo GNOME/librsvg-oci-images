@@ -3,7 +3,7 @@
 set -eu
 
 echo "Removing apt cache"
-apt-get clean
+apt clean
 rm -rf /var/lib/apt/lists
 
 rm -R /root/*

@@ -1,9 +1,8 @@
 FROM debian:testing
 
-COPY prepare.sh cleanup.sh rustc.sh /root/
+COPY rustc_prep.sh cleanup.sh rustc.sh /root/
 
-RUN apt update -yqq && apt install -yqq curl wget
-RUN /usr/bin/sh /root/prepare.sh && \
+RUN /usr/bin/sh /root/rustc_prep.sh && \
     /usr/bin/sh /root/rustc.sh && \
     /usr/bin/sh /root/cleanup.sh
  
