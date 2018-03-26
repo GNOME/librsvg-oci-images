@@ -1,8 +1,0 @@
-FROM debian:testing
-
-COPY rustc_prep.sh cleanup.sh rustc.sh /root/
-
-RUN /usr/bin/sh /root/rustc_prep.sh && \
-    /usr/bin/sh /root/rustc.sh && \
-    /usr/bin/sh /root/cleanup.sh
- 

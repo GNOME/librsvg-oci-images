@@ -1,5 +1,6 @@
 #!/bin/sh
 
+dnf upgrade -y
 dnf install -y gcc rust rust-std-static cargo make vala \
     automake autoconf libtool gettext itstool \
     gdk-pixbuf2-devel gobject-introspection-devel \

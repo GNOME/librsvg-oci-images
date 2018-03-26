@@ -35,8 +35,8 @@ stages:
     before_script:
         - export IMAGE=${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/rustc:${TAG_VERSION}
         - export OCI_YML=rustc.yml
-        - export DIR=debian/
-        - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" debian/rustc_template > debian/rustc.sh
+        - export DIR=rustc/
+        - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" rustc/rustc_template > rustc/rustc.yml
     <<: *base_build
     allow_failure: true
 
