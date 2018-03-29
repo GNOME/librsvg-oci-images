@@ -110,6 +110,12 @@ ubuntu_i386:18.04:
 
     <<: *distro_build
 
+rustc:1.25:
+    variables:
+      RUSTC_VERSION: "1.25.0"
+      TAG_VERSION: "1.25"
+    <<: *rustc
+
 rustc:1.24:
     variables:
       RUSTC_VERSION: "1.24.1"
