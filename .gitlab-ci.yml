@@ -5,12 +5,11 @@ services:
 stages:
     - clippy
 
-variables:
-  IMAGE_TAG: ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/clippy:nightly
-
 build:
   stage: clippy
   script:
+    - export NAMESPACE="$(echo "${CI_PROJECT_NAMESPACE}" | tr A-Z a-z)"
+    - export IMAGE=${CI_REGISTRY}/${NAMESPACE}/${CI_PROJECT_NAME}/clippy:nightly
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
     - docker build --pull -f clippy.yml -t ${IMAGE_TAG} .
     - docker push ${IMAGE_TAG}
