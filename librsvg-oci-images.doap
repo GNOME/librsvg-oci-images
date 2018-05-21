@@ -5,10 +5,10 @@
          xmlns:gnome="http://api.gnome.org/doap-extensions#"
          xmlns="http://usefulinc.com/ns/doap#">
 
-  <name xml:lang="en">gnome-nightly-oci</name>
-  <shortdesc xml:lang="en">GNOME Nightly runtime container images</shortdesc>
-  <description xml:lang="en">Pre built container images of the GNOME Nightly runtime to be used for building and testing Flatpaks in the CI.</description>
-  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/gnome-nightly-oci/issues" />
+  <name xml:lang="en">librsvg-oci-images</name>
+  <shortdesc xml:lang="en">GNOME Nightly librsvg runtime container images</shortdesc>
+  <description xml:lang="en">Pre built container images of the GNOME librsvg runtime to be used for building and testing Flatpaks in the CI.</description>
+  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/librsvg-oci-images/issues" />
   <maintainer>
     <foaf:Person>
       <foaf:name>Jordan Petridis</foaf:name>
@@ -24,4 +24,3 @@
     </foaf:Person>
   </maintainer>
 </Project>
-
