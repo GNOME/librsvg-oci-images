@@ -6,8 +6,8 @@
          xmlns="http://usefulinc.com/ns/doap#">
 
   <name xml:lang="en">librsvg-oci-images</name>
-  <shortdesc xml:lang="en">GNOME Nightly librsvg runtime container images</shortdesc>
-  <description xml:lang="en">Pre built container images of the GNOME librsvg runtime to be used for building and testing Flatpaks in the CI.</description>
+  <shortdesc xml:lang="en">Container images used for the Librsvg CI</shortdesc>
+  <description xml:lang="en">Container images pre-bundled the Librsvg build dependancies, used in the Librsvg CI pipeline</description>
   <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/librsvg-oci-images/issues" />
   <maintainer>
     <foaf:Person>
