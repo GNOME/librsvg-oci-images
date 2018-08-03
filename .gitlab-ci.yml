@@ -47,7 +47,7 @@ stages:
     <<: *base_build
     allow_failure: true
 
-fedora:latest:
+fedora latest:
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
@@ -57,7 +57,7 @@ fedora:latest:
 
     <<: *distro_build
 
-fedora:rawhide:
+fedora rawhide:
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
@@ -67,7 +67,7 @@ fedora:rawhide:
 
     <<: *distro_build
 
-debian:testing:
+debian testing:
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "debian"
@@ -77,7 +77,7 @@ debian:testing:
 
     <<: *distro_build
 
-opensuse:tumbleweed:
+opensuse tumbleweed:
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "opensuse"
@@ -87,7 +87,7 @@ opensuse:tumbleweed:
 
     <<: *distro_build
 
-ubuntu:18.04:
+ubuntu 18.04 x86_64:
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "ubuntu"
@@ -97,7 +97,7 @@ ubuntu:18.04:
 
     <<: *distro_build
 
-debian_i386:testing:
+debian testing i386:
     variables:
       ARCH: "i386"
       DISTRO_NAME: "debian"
@@ -107,7 +107,7 @@ debian_i386:testing:
 
     <<: *distro_build
 
-ubuntu_i386:18.04:
+ubuntu 18.04 i386:
     variables:
       ARCH: "i386"
       DISTRO_NAME: "ubuntu"
@@ -117,49 +117,49 @@ ubuntu_i386:18.04:
 
     <<: *distro_build
 
-rustc:1.28:
+rustc 1.28 8:
     variables:
       RUSTC_VERSION: "1.28.0"
       TAG_VERSION: "1.28"
     <<: *rustc
 
-rustc:1.27:
+rustc 1.27 7:
     variables:
       RUSTC_VERSION: "1.27.2"
       TAG_VERSION: "1.27"
     <<: *rustc
 
-rustc:1.26:
+rustc 1.26 6:
     variables:
       RUSTC_VERSION: "1.26.2"
       TAG_VERSION: "1.26"
     <<: *rustc
 
-rustc:1.25:
+rustc 1.25 5:
     variables:
       RUSTC_VERSION: "1.25.0"
       TAG_VERSION: "1.25"
     <<: *rustc
 
-rustc:1.24:
+rustc 1.24 4:
     variables:
       RUSTC_VERSION: "1.24.1"
       TAG_VERSION: "1.24"
     <<: *rustc
 
-rustc:1.23:
+rustc 1.23 3:
     variables:
       RUSTC_VERSION: "1.23.0"
       TAG_VERSION: "1.23"
     <<: *rustc
 
-rustc:1.22:
+rustc 1.22 2:
     variables:
       RUSTC_VERSION: "1.22.1"
       TAG_VERSION: "1.22"
     <<: *rustc
 
-rustc:1.21:
+rustc 1.21 1:
     variables:
       RUSTC_VERSION: "1.21.0"
       TAG_VERSION: "1.21"
