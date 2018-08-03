@@ -57,7 +57,7 @@ fedora latest:
 
     <<: *distro_build
 
-fedora rawhide:
+x86_64 fedora_rawhide 4:
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
@@ -67,7 +67,7 @@ fedora rawhide:
 
     <<: *distro_build
 
-debian testing:
+x86_64 debian_testing 3:
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "debian"
@@ -77,7 +77,7 @@ debian testing:
 
     <<: *distro_build
 
-opensuse tumbleweed:
+x86_64 opensuse_tumbleweed 2:
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "opensuse"
@@ -87,7 +87,7 @@ opensuse tumbleweed:
 
     <<: *distro_build
 
-ubuntu 18.04 x86_64:
+x86_64 ubuntu_18.04  1:
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "ubuntu"
@@ -97,7 +97,7 @@ ubuntu 18.04 x86_64:
 
     <<: *distro_build
 
-debian testing i386:
+i386 debian_testing  2:
     variables:
       ARCH: "i386"
       DISTRO_NAME: "debian"
@@ -107,7 +107,7 @@ debian testing i386:
 
     <<: *distro_build
 
-ubuntu 18.04 i386:
+i386 ubuntu_18.04  1:
     variables:
       ARCH: "i386"
       DISTRO_NAME: "ubuntu"
