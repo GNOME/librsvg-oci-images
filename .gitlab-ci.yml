@@ -47,7 +47,7 @@ stages:
     <<: *base_build
     allow_failure: true
 
-fedora latest:
+x86_64 fedora_latest 5:
     variables:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
