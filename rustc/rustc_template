@@ -3,7 +3,7 @@ FROM debian:testing-slim
 # Librsvg deps
 RUN apt update -yqq && apt upgrade -yqq && \
     apt install -yqq --no-install-recommends \
-    gcc make vala curl \
+    gcc make curl \
     automake autoconf libtool gettext itstool \
     libgdk-pixbuf2.0-dev libgirepository1.0-dev \
     gtk-doc-tools git libgtk-3-dev libxml2-dev \
