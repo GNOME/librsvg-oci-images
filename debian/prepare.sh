@@ -6,4 +6,4 @@ apt install -yqq --no-install-recommends \
     automake autoconf libtool gettext itstool \
     libgdk-pixbuf2.0-dev libgirepository1.0-dev \
     gtk-doc-tools git libgtk-3-dev ccache \
-    libxml2-dev libcroco3-dev libcairo2-dev ca-certificates libcurl3 openssl
+    libxml2-dev libcroco3-dev libcairo2-dev ca-certificates openssl
