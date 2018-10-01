@@ -31,7 +31,6 @@ stages:
         - export NAMESPACE="$(echo "${CI_PROJECT_NAMESPACE}" | tr A-Z a-z)"
         - export IMAGE=${CI_REGISTRY}/${NAMESPACE}/${CI_PROJECT_NAME}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
     <<: *base_build
-    allow_failure: true
 
 # Expects $COMPILER variable which should be the name of the compiler ex. rustc/gcc
 # Expects $TAG_VERSION variable which should be the version of the compiler minus the minor release ex. 1.24
@@ -45,7 +44,6 @@ stages:
         - export DIR=rustc/
         - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" rustc/rustc_template > rustc/rustc.yml
     <<: *base_build
-    allow_failure: true
 
 fedora latest:
     variables:
@@ -66,6 +64,7 @@ fedora rawhide:
       DIR: "fedora"
 
     <<: *distro_build
+    allow_failure: true
 
 debian testing:
     variables:
