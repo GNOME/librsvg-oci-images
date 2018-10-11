@@ -1,4 +1,4 @@
-FROM debian:testing-slim
+FROM debian:buster-slim
 
 # Librsvg deps
 RUN apt update -yqq && \
