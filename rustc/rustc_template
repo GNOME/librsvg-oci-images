@@ -1,7 +1,7 @@
 FROM debian:testing-slim
 
 # Librsvg deps
-RUN apt update -yqq && apt upgrade -yqq && \
+RUN apt update -yqq && \
     apt install -yqq --no-install-recommends \
     gcc make curl \
     automake autoconf libtool gettext itstool \
