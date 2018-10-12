@@ -118,7 +118,7 @@ ubuntu 18.04 i386:
 
 rustc 1.29 9:
     variables:
-      RUSTC_VERSION: "1.29.1"
+      RUSTC_VERSION: "1.29.2"
       TAG_VERSION: "1.29"
     <<: *rustc
 
