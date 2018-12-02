@@ -42,6 +42,12 @@ stages:
         - export DIR=rustc/
         - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" rustc/rustc_template > rustc/rustc.yml
     <<: *base_build
+    only:
+        refs:
+            - shedules
+            - triggers
+        changes:
+            - 'rustc/*'
 
 fedora latest:
     variables:
@@ -50,6 +56,12 @@ fedora latest:
       DISTRO_VER: "latest"
       OCI_YML: "latest.yml"
       DIR: "fedora"
+    only:
+        refs:
+            - shedules
+            - triggers
+        changes:
+            - 'fedora/*'
 
     <<: *distro_build
 
@@ -60,6 +72,12 @@ fedora rawhide:
       DISTRO_VER: "rawhide"
       OCI_YML: "rawhide.yml"
       DIR: "fedora"
+    only:
+        refs:
+            - shedules
+            - triggers
+        changes:
+            - 'fedora/*'
 
     <<: *distro_build
     allow_failure: true
@@ -71,6 +89,12 @@ debian testing:
       DISTRO_VER: "testing"
       OCI_YML: "testing.yml"
       DIR: "debian"
+    only:
+        refs:
+            - shedules
+            - triggers
+        changes:
+            - 'debian/*'
 
     <<: *distro_build
 
@@ -81,6 +105,12 @@ opensuse tumbleweed:
       DISTRO_VER: "tumbleweed"
       OCI_YML: "tumbleweed.yml"
       DIR: "opensuse"
+    only:
+        refs:
+            - shedules
+            - triggers
+        changes:
+            - 'opensuse/*'
 
     <<: *distro_build
 
@@ -91,6 +121,12 @@ ubuntu 18.04 x86_64:
       DISTRO_VER: "18.04"
       OCI_YML: "bionic.yml"
       DIR: "debian"
+    only:
+        refs:
+            - shedules
+            - triggers
+        changes:
+            - 'debian/*'
 
     <<: *distro_build
 
@@ -101,6 +137,12 @@ debian testing i386:
       DISTRO_VER: "testing"
       OCI_YML: "i386_testing.yml"
       DIR: "debian"
+    only:
+        refs:
+            - shedules
+            - triggers
+        changes:
+            - 'debian/*'
 
     <<: *distro_build
 
@@ -111,6 +153,12 @@ ubuntu 18.04 i386:
       DISTRO_VER: "18.04"
       OCI_YML: "i386_bionic.yml"
       DIR: "debian"
+    only:
+        refs:
+            - shedules
+            - triggers
+        changes:
+            - 'debian/*'
 
     <<: *distro_build
 
