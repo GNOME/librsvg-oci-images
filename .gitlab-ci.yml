@@ -28,8 +28,7 @@ stages:
 .distro_template: &distro_build
     stage: distro
     before_script:
-        - export NAMESPACE="$(echo "${CI_PROJECT_NAMESPACE}" | tr A-Z a-z)"
-        - export IMAGE=${CI_REGISTRY}/${NAMESPACE}/${CI_PROJECT_NAME}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
+        - export IMAGE=${CI_REGISTRY_IMAGE}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
     <<: *base_build
 
 # Expects $COMPILER variable which should be the name of the compiler ex. rustc/gcc
@@ -38,8 +37,7 @@ stages:
 .rustc_template: &rustc
     stage: rustc
     before_script:
-        - export NAMESPACE="$(echo "${CI_PROJECT_NAMESPACE}" | tr A-Z a-z)"
-        - export IMAGE=${CI_REGISTRY}/${NAMESPACE}/${CI_PROJECT_NAME}/rustc:${TAG_VERSION}
+        - export IMAGE=${CI_REGISTRY_IMAGE}/rustc:${TAG_VERSION}
         - export OCI_YML=rustc.yml
         - export DIR=rustc/
         - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" rustc/rustc_template > rustc/rustc.yml
