@@ -42,6 +42,9 @@ stages:
         - export DIR=rustc/
         - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" rustc/rustc_template > rustc/rustc.yml
     <<: *base_build
+    only:
+        changes:
+            - 'rustc/*'
 
 fedora latest:
     variables:
