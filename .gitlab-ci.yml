@@ -13,12 +13,11 @@ stages:
 
 # Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $OCI_YML variable which should be the path to the dockerfile
-# Expects $DIR variable which should be the name of the parrent folder of the dockerfile
+# Expects $CONTEXT_DIR variable which should be the name of the parrent folder of the dockerfile
 .base:
   script:
-    - cd ${DIR}
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build --pull -f ${OCI_YML} -t ${IMAGE} .
+    - docker build --pull -f ${OCI_YML} -t ${IMAGE} ${CONTEXT_DIR}
     - docker push ${IMAGE}
 
 # Expects $ARCH variable which should be the architexcture of the image ex. x86_64
@@ -39,7 +38,7 @@ stages:
     before_script:
         - export IMAGE=${CI_REGISTRY_IMAGE}/rustc:${TAG_VERSION}
         - export OCI_YML=rustc.yml
-        - export DIR=rustc/
+        - export CONTEXT_DIR=rustc/
         - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" rustc/rustc_template > rustc/rustc.yml
     extends: '.base'
     only:
@@ -55,7 +54,7 @@ fedora latest:
       DISTRO_NAME: "fedora"
       DISTRO_VER: "latest"
       OCI_YML: "latest.yml"
-      DIR: "fedora"
+      CONTEXT_DIR: "fedora"
     only:
         refs:
             - shedules
@@ -71,7 +70,7 @@ fedora rawhide:
       DISTRO_NAME: "fedora"
       DISTRO_VER: "rawhide"
       OCI_YML: "rawhide.yml"
-      DIR: "fedora"
+      CONTEXT_DIR: "fedora"
     only:
         refs:
             - shedules
@@ -88,7 +87,7 @@ debian testing:
       DISTRO_NAME: "debian"
       DISTRO_VER: "testing"
       OCI_YML: "testing.yml"
-      DIR: "debian"
+      CONTEXT_DIR: "debian"
     only:
         refs:
             - shedules
@@ -104,7 +103,7 @@ opensuse tumbleweed:
       DISTRO_NAME: "opensuse"
       DISTRO_VER: "tumbleweed"
       OCI_YML: "tumbleweed.yml"
-      DIR: "opensuse"
+      CONTEXT_DIR: "opensuse"
     only:
         refs:
             - shedules
@@ -120,7 +119,7 @@ ubuntu 18.04 x86_64:
       DISTRO_NAME: "ubuntu"
       DISTRO_VER: "18.04"
       OCI_YML: "bionic.yml"
-      DIR: "debian"
+      CONTEXT_DIR: "debian"
     only:
         refs:
             - shedules
@@ -136,7 +135,7 @@ debian testing i386:
       DISTRO_NAME: "debian"
       DISTRO_VER: "testing"
       OCI_YML: "i386_testing.yml"
-      DIR: "debian"
+      CONTEXT_DIR: "debian"
     only:
         refs:
             - shedules
@@ -152,7 +151,7 @@ ubuntu 18.04 i386:
       DISTRO_NAME: "ubuntu"
       DISTRO_VER: "18.04"
       OCI_YML: "i386_bionic.yml"
-      DIR: "debian"
+      CONTEXT_DIR: "debian"
     only:
         refs:
             - shedules
