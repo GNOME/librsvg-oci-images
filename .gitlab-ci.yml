@@ -42,9 +42,6 @@ stages:
         - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" rustc/rustc_template > rustc/rustc.yml
     extends: '.base'
     only:
-        refs:
-            - shedules
-            - triggers
         changes:
             - 'rustc/*'
 
@@ -56,9 +53,6 @@ fedora latest:
       OCI_YML: "latest.yml"
       CONTEXT_DIR: "fedora"
     only:
-        refs:
-            - shedules
-            - triggers
         changes:
             - 'fedora/*'
 
@@ -72,9 +66,6 @@ fedora rawhide:
       OCI_YML: "rawhide.yml"
       CONTEXT_DIR: "fedora"
     only:
-        refs:
-            - shedules
-            - triggers
         changes:
             - 'fedora/*'
 
@@ -89,9 +80,6 @@ debian testing:
       OCI_YML: "testing.yml"
       CONTEXT_DIR: "debian"
     only:
-        refs:
-            - shedules
-            - triggers
         changes:
             - 'debian/*'
 
@@ -105,9 +93,6 @@ opensuse tumbleweed:
       OCI_YML: "tumbleweed.yml"
       CONTEXT_DIR: "opensuse"
     only:
-        refs:
-            - shedules
-            - triggers
         changes:
             - 'opensuse/*'
 
@@ -121,9 +106,6 @@ ubuntu 18.04 x86_64:
       OCI_YML: "bionic.yml"
       CONTEXT_DIR: "debian"
     only:
-        refs:
-            - shedules
-            - triggers
         changes:
             - 'debian/*'
 
@@ -137,9 +119,6 @@ debian testing i386:
       OCI_YML: "i386_testing.yml"
       CONTEXT_DIR: "debian"
     only:
-        refs:
-            - shedules
-            - triggers
         changes:
             - 'debian/*'
 
@@ -153,9 +132,6 @@ ubuntu 18.04 i386:
       OCI_YML: "i386_bionic.yml"
       CONTEXT_DIR: "debian"
     only:
-        refs:
-            - shedules
-            - triggers
         changes:
             - 'debian/*'
 
