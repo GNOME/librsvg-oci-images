@@ -50,7 +50,7 @@ fedora latest:
       ARCH: "amd64"
       DISTRO_NAME: "fedora"
       DISTRO_VER: "latest"
-      OCI_YML: "latest.yml"
+      OCI_YML: "fedora/latest.yml"
       CONTEXT_DIR: "fedora"
     only:
         changes:
