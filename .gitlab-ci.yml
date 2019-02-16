@@ -1,15 +1,15 @@
 image: docker:latest
 services:
-    - docker:dind
+  - docker:dind
 
 # When using dind, it's wise to use the overlayfs driver for
 # improved performance.
 variables:
-    DOCKER_DRIVER: overlay2
+  DOCKER_DRIVER: overlay2
 
 stages:
-    - distro
-    - rustc
+  - distro
+  - rustc
 
 # Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $DOCKERFILE variable which should be the path to the dockerfile
@@ -25,180 +25,180 @@ stages:
 # Expects $DISTRO_VER variable which should be the version distro image ex. 18.04
 # Expects $DOCKERFILE variable which should be the path to the dockerfile
 .distro build:
-    stage: distro
-    before_script:
-        - export IMAGE=${CI_REGISTRY_IMAGE}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
-    extends: '.base'
+  stage: distro
+  before_script:
+    - export IMAGE=${CI_REGISTRY_IMAGE}/${ARCH}/${DISTRO_NAME}:${DISTRO_VER}
+  extends: '.base'
 
 # Expects $COMPILER variable which should be the name of the compiler ex. rustc/gcc
 # Expects $TAG_VERSION variable which should be the version of the compiler minus the minor release ex. 1.24
 # Expects $RUSTC_VERSION variable which should be the version of the compiler ex. 1.24.1
 .rustc:
-    stage: rustc
-    variables:
-        CONTEXT_DIR: 'rustc'
-        DOCKERFILE: 'rustc/rustc'
-    before_script:
-        - export IMAGE=${CI_REGISTRY_IMAGE}/rustc:${TAG_VERSION}
-        - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" rustc/rustc_template > rustc/rustc
-    extends: '.base'
-    only:
-        changes:
-            - 'rustc/*'
+  stage: rustc
+  variables:
+    CONTEXT_DIR: 'rustc'
+    DOCKERFILE: 'rustc/rustc'
+  before_script:
+    - export IMAGE=${CI_REGISTRY_IMAGE}/rustc:${TAG_VERSION}
+    - sed -e "s|@RUSTC_VERSION@|$RUSTC_VERSION|" rustc/rustc_template > rustc/rustc
+  extends: '.base'
+  only:
+    changes:
+      - 'rustc/*'
 
 fedora latest:
-    extends: '.distro build'
-    variables:
-      ARCH: "amd64"
-      DISTRO_NAME: "fedora"
-      DISTRO_VER: "latest"
-      DOCKERFILE: "fedora/latest"
-      CONTEXT_DIR: "fedora"
-    only:
-        changes:
-            - 'fedora/*'
+  extends: '.distro build'
+  variables:
+    ARCH: "amd64"
+    DISTRO_NAME: "fedora"
+    DISTRO_VER: "latest"
+    DOCKERFILE: "fedora/latest"
+    CONTEXT_DIR: "fedora"
+  only:
+    changes:
+      - 'fedora/*'
 
 fedora rawhide:
-    extends: '.distro build'
-    allow_failure: true
-    variables:
-      ARCH: "amd64"
-      DISTRO_NAME: "fedora"
-      DISTRO_VER: "rawhide"
-      DOCKERFILE: "fedora/rawhide"
-      CONTEXT_DIR: "fedora"
-    only:
-        changes:
-            - 'fedora/*'
+  extends: '.distro build'
+  allow_failure: true
+  variables:
+    ARCH: "amd64"
+    DISTRO_NAME: "fedora"
+    DISTRO_VER: "rawhide"
+    DOCKERFILE: "fedora/rawhide"
+    CONTEXT_DIR: "fedora"
+  only:
+    changes:
+      - 'fedora/*'
 
 debian testing:
-    extends: '.distro build'
-    variables:
-      ARCH: "amd64"
-      DISTRO_NAME: "debian"
-      DISTRO_VER: "testing"
-      DOCKERFILE: "debian/testing"
-      CONTEXT_DIR: "debian"
-    only:
-        changes:
-            - 'debian/*'
+  extends: '.distro build'
+  variables:
+    ARCH: "amd64"
+    DISTRO_NAME: "debian"
+    DISTRO_VER: "testing"
+    DOCKERFILE: "debian/testing"
+    CONTEXT_DIR: "debian"
+  only:
+    changes:
+      - 'debian/*'
 
 opensuse tumbleweed:
-    extends: '.distro build'
-    variables:
-      ARCH: "amd64"
-      DISTRO_NAME: "opensuse"
-      DISTRO_VER: "tumbleweed"
-      DOCKERFILE: "opensuse/tumbleweed"
-      CONTEXT_DIR: "opensuse"
-    only:
-        changes:
-            - 'opensuse/*'
+  extends: '.distro build'
+  variables:
+    ARCH: "amd64"
+    DISTRO_NAME: "opensuse"
+    DISTRO_VER: "tumbleweed"
+    DOCKERFILE: "opensuse/tumbleweed"
+    CONTEXT_DIR: "opensuse"
+  only:
+    changes:
+      - 'opensuse/*'
 
 ubuntu 18.04 x86_64:
-    extends: '.distro build'
-    variables:
-      ARCH: "amd64"
-      DISTRO_NAME: "ubuntu"
-      DISTRO_VER: "18.04"
-      DOCKERFILE: "debian/bionic"
-      CONTEXT_DIR: "debian"
-    only:
-        changes:
-            - 'debian/*'
+  extends: '.distro build'
+  variables:
+    ARCH: "amd64"
+    DISTRO_NAME: "ubuntu"
+    DISTRO_VER: "18.04"
+    DOCKERFILE: "debian/bionic"
+    CONTEXT_DIR: "debian"
+  only:
+    changes:
+      - 'debian/*'
 
 debian testing i386:
-    extends: '.distro build'
-    variables:
-      ARCH: "i386"
-      DISTRO_NAME: "debian"
-      DISTRO_VER: "testing"
-      DOCKERFILE: "debian/i386_testing"
-      CONTEXT_DIR: "debian"
-    only:
-        changes:
-            - 'debian/*'
+  extends: '.distro build'
+  variables:
+    ARCH: "i386"
+    DISTRO_NAME: "debian"
+    DISTRO_VER: "testing"
+    DOCKERFILE: "debian/i386_testing"
+    CONTEXT_DIR: "debian"
+  only:
+    changes:
+      - 'debian/*'
 
 ubuntu 18.04 i386:
-    extends: '.distro build'
-    variables:
-      ARCH: "i386"
-      DISTRO_NAME: "ubuntu"
-      DISTRO_VER: "18.04"
-      DOCKERFILE: "debian/i386_bionic"
-      CONTEXT_DIR: "debian"
-    only:
-        changes:
-            - 'debian/*'
+  extends: '.distro build'
+  variables:
+    ARCH: "i386"
+    DISTRO_NAME: "ubuntu"
+    DISTRO_VER: "18.04"
+    DOCKERFILE: "debian/i386_bionic"
+    CONTEXT_DIR: "debian"
+  only:
+    changes:
+      - 'debian/*'
 
 rustc 1.32 12:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.32.0"
-      TAG_VERSION: "1.32"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.32.0"
+    TAG_VERSION: "1.32"
 
 rustc 1.31 11:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.31.1"
-      TAG_VERSION: "1.31"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.31.1"
+    TAG_VERSION: "1.31"
 
 rustc 1.30 10:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.30.1"
-      TAG_VERSION: "1.30"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.30.1"
+    TAG_VERSION: "1.30"
 
 rustc 1.29 9:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.29.2"
-      TAG_VERSION: "1.29"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.29.2"
+    TAG_VERSION: "1.29"
 
 rustc 1.28 8:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.28.0"
-      TAG_VERSION: "1.28"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.28.0"
+    TAG_VERSION: "1.28"
 
 rustc 1.27 7:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.27.2"
-      TAG_VERSION: "1.27"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.27.2"
+    TAG_VERSION: "1.27"
 
 rustc 1.26 6:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.26.2"
-      TAG_VERSION: "1.26"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.26.2"
+    TAG_VERSION: "1.26"
 
 rustc 1.25 5:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.25.0"
-      TAG_VERSION: "1.25"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.25.0"
+    TAG_VERSION: "1.25"
 
 rustc 1.24 4:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.24.1"
-      TAG_VERSION: "1.24"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.24.1"
+    TAG_VERSION: "1.24"
 
 rustc 1.23 3:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.23.0"
-      TAG_VERSION: "1.23"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.23.0"
+    TAG_VERSION: "1.23"
 
 rustc 1.22 2:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.22.1"
-      TAG_VERSION: "1.22"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.22.1"
+    TAG_VERSION: "1.22"
 
 rustc 1.21 1:
-    extends: '.rustc'
-    variables:
-      RUSTC_VERSION: "1.21.0"
-      TAG_VERSION: "1.21"
+  extends: '.rustc'
+  variables:
+    RUSTC_VERSION: "1.21.0"
+    TAG_VERSION: "1.21"
