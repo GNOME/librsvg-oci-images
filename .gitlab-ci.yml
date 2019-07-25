@@ -131,6 +131,18 @@ ubuntu 18.04 i386:
     changes:
       - 'debian/*'
 
+archlinux mingw:
+  extends: '.distro build'
+  variables:
+    ARCH: "amd64"
+    DISTRO_NAME: "archlinux"
+    DISTRO_VER: "latest"
+    DOCKERFILE: "archlinux/mingw"
+    CONTEXT_DIR: "archlinux"
+  only:
+    changes:
+      - 'archlinux/*'
+
 rustc 1.32 12:
   extends: '.rustc'
   variables:
