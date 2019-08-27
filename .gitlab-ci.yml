@@ -1,24 +1,27 @@
-image: docker:latest
-services:
-  - docker:dind
-
-# When using dind, it's wise to use the overlayfs driver for
-# improved performance.
-variables:
-  DOCKER_DRIVER: overlay2
+image: 'registry.fedoraproject.org/fedora:31'
 
 stages:
   - distro
   - rustc
+
+# Buildah can't use 'overlay' driver when running inside docker
+variables:
+  STORAGE_DRIVER: vfs
 
 # Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $DOCKERFILE variable which should be the path to the dockerfile
 # Expects $CONTEXT_DIR variable which should be the name of the parrent folder of the dockerfile
 .base:
   script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build --pull -f ${DOCKERFILE} -t ${IMAGE} ${CONTEXT_DIR}
-    - docker push ${IMAGE}
+    - dnf install -y buildah podman
+    - buildah login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
+    # Newer versions of podman/buildah try to set overlayfs mount options when
+    # using the vfs driver, and this causes errors.
+    - sed -i '/^mountopt =.*/d' /etc/containers/storage.conf
+
+    - podman build --format=docker --pull -f ${DOCKERFILE} -t ${IMAGE} ${CONTEXT_DIR}
+    - podman push ${IMAGE}
 
 # Expects $ARCH variable which should be the architexcture of the image ex. x86_64
 # Expects $DISTRO_NAME variable which should be the name of the distro image ex. ubuntu
