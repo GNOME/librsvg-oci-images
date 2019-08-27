@@ -1,4 +1,4 @@
-image: 'registry.fedoraproject.org/fedora:31'
+image: 'registry.fedoraproject.org/fedora:30'
 
 stages:
   - distro
@@ -6,7 +6,7 @@ stages:
 
 # Buildah can't use 'overlay' driver when running inside docker
 variables:
-  STORAGE_DRIVER: vfs
+  STORAGE_DRIVER: 'vfs'
 
 # Expects $IMAGE which should be the name+tag of the registry image.
 # Expects $DOCKERFILE variable which should be the path to the dockerfile
