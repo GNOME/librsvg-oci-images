@@ -20,7 +20,7 @@ variables:
     # using the vfs driver, and this causes errors.
     - sed -i '/^mountopt =.*/d' /etc/containers/storage.conf
 
-    - podman build --format=docker --pull -f ${DOCKERFILE} -t ${IMAGE} ${CONTEXT_DIR}
+    - podman build --cgroup-manager=cgroupfs --format=docker --pull -f ${DOCKERFILE} -t ${IMAGE} ${CONTEXT_DIR}
     - |
       if [ "$CI_COMMIT_REF_NAME" = "master" ]; then
           podman push ${IMAGE}
