@@ -21,7 +21,12 @@ variables:
     - sed -i '/^mountopt =.*/d' /etc/containers/storage.conf
 
     - podman build --format=docker --pull -f ${DOCKERFILE} -t ${IMAGE} ${CONTEXT_DIR}
-    - podman push ${IMAGE}
+    - |
+      if [ "$CI_COMMIT_REF_NAME" = "master" ]; then
+          podman push ${IMAGE}
+      else
+          echo "Not pushing image, as we are on non-master branch $CI_COMMIT_REF_NAME"
+      fi
 
 # Expects $ARCH variable which should be the architexcture of the image ex. x86_64
 # Expects $DISTRO_NAME variable which should be the name of the distro image ex. ubuntu
