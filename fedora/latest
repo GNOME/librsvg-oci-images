@@ -2,10 +2,5 @@ FROM registry.fedoraproject.org/fedora:30
 
 COPY prepare.sh cleanup.sh /root/
 
-# cargo-vendor deps
-RUN dnf install -y openssl-devel libssh2-devel libgit2-devel cmake xz
-
 RUN /usr/bin/sh /root/prepare.sh && \
     /usr/bin/sh /root/cleanup.sh
-
-RUN cargo install cargo-vendor

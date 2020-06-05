@@ -1,6 +1,24 @@
 FROM opensuse/tumbleweed
 
-COPY prepare.sh cleanup.sh /root/
+ENV SHELL=/bin/bash
 
-RUN /usr/bin/sh /root/prepare.sh && \
-    /usr/bin/sh /root/cleanup.sh
+RUN zypper update -y && \
+    zypper install -y gcc rust cargo rustfmt gdb rust-gdb rr make vala \
+    automake autoconf libtool gettext itstool git \
+    gtk-doc gobject-introspection-devel gtk3-devel \
+    libxml2-devel libcroco-devel cairo-devel \
+    pango-devel gdk-pixbuf-devel ccache gettext-tools xz \
+    sudo shadow system-group-wheel && \
+    zypper clean -a
+
+# Enable sudo for wheel users
+RUN sed -i -e 's/# %wheel/%wheel/' -e '0,/%wheel/{s/%wheel/# %wheel/}' \
+    /etc/sudoers
+
+ENV HOST_USER_ID 5555
+RUN useradd -u $HOST_USER_ID -G wheel -ms /bin/bash user
+
+USER user
+WORKDIR /home/user
+
+ENV LANG C.UTF-8
