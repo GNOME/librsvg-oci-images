@@ -25,7 +25,7 @@ variables:
     - buildah bud -f ${DOCKERFILE} -t ${IMAGE}
     - |
       if [ "$CI_COMMIT_REF_NAME" = "master" ]; then
-          podman push ${IMAGE}
+          buildah push ${IMAGE}
       else
           echo "Not pushing image, as we are on non-master branch $CI_COMMIT_REF_NAME"
       fi
