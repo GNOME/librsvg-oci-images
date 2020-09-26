@@ -68,7 +68,7 @@ fedora latest:
     changes:
       - 'fedora/*'
 
-debian testing:
+.debian testing:
   extends: '.distro build'
   variables:
     ARCH: "amd64"
@@ -92,7 +92,7 @@ opensuse tumbleweed:
     changes:
       - 'opensuse/*'
 
-ubuntu 18.04 x86_64:
+.ubuntu 18.04 x86_64:
   extends: '.distro build'
   variables:
     ARCH: "amd64"
@@ -104,7 +104,7 @@ ubuntu 18.04 x86_64:
     changes:
       - 'debian/*'
 
-debian testing i386:
+.debian testing i386:
   extends: '.distro build'
   variables:
     ARCH: "i386"
@@ -116,7 +116,7 @@ debian testing i386:
     changes:
       - 'debian/*'
 
-ubuntu 18.04 i386:
+.ubuntu 18.04 i386:
   extends: '.distro build'
   variables:
     ARCH: "i386"
