@@ -68,19 +68,6 @@ fedora latest:
     changes:
       - 'fedora/*'
 
-fedora rawhide:
-  extends: '.distro build'
-  allow_failure: true
-  variables:
-    ARCH: "amd64"
-    DISTRO_NAME: "fedora"
-    DISTRO_VER: "rawhide"
-    DOCKERFILE: "fedora/rawhide"
-    CONTEXT_DIR: "fedora"
-  only:
-    changes:
-      - 'fedora/*'
-
 debian testing:
   extends: '.distro build'
   variables:
