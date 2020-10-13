@@ -5,11 +5,11 @@ ENV SHELL=/bin/bash
 RUN zypper update -y && \
     zypper install -y gcc rust cargo cargo-c \
     clippy rustfmt gdb rust-gdb rr make vala \
-    automake autoconf libtool gettext itstool git \
+    automake autoconf curl gettext git itstool libtool \
     gtk-doc gobject-introspection-devel gtk3-devel \
     libxml2-devel libcroco-devel cairo-devel \
-    pango-devel gdk-pixbuf-devel ccache gettext-tools xz \
-    sudo shadow system-group-wheel && \
+    pango-devel gdk-pixbuf-devel ccache gettext-tools \
+    sudo shadow system-group-wheel xz && \
     zypper clean -a
 
 # Enable sudo for wheel users
