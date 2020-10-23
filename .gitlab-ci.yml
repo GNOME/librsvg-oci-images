@@ -68,13 +68,13 @@ fedora latest:
     changes:
       - 'fedora/*'
 
-.debian testing:
+debian testing:
   extends: '.distro build'
   variables:
     ARCH: "amd64"
     DISTRO_NAME: "debian"
     DISTRO_VER: "testing"
-    DOCKERFILE: "debian/testing"
+    DOCKERFILE: "debian/testing.Dockerfile"
     CONTEXT_DIR: "debian"
   only:
     changes:
@@ -91,40 +91,4 @@ opensuse tumbleweed:
   only:
     changes:
       - 'opensuse/*'
-
-.ubuntu 18.04 x86_64:
-  extends: '.distro build'
-  variables:
-    ARCH: "amd64"
-    DISTRO_NAME: "ubuntu"
-    DISTRO_VER: "18.04"
-    DOCKERFILE: "debian/bionic"
-    CONTEXT_DIR: "debian"
-  only:
-    changes:
-      - 'debian/*'
-
-.debian testing i386:
-  extends: '.distro build'
-  variables:
-    ARCH: "i386"
-    DISTRO_NAME: "debian"
-    DISTRO_VER: "testing"
-    DOCKERFILE: "debian/i386_testing"
-    CONTEXT_DIR: "debian"
-  only:
-    changes:
-      - 'debian/*'
-
-.ubuntu 18.04 i386:
-  extends: '.distro build'
-  variables:
-    ARCH: "i386"
-    DISTRO_NAME: "ubuntu"
-    DISTRO_VER: "18.04"
-    DOCKERFILE: "debian/i386_bionic"
-    CONTEXT_DIR: "debian"
-  only:
-    changes:
-      - 'debian/*'
 
