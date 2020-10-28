@@ -8,7 +8,7 @@ RUN apt update -yqq \
     gtk-doc-tools libpango1.0-dev libgtk-3-dev \
     libxml2-dev libcroco3-dev libcairo2-dev \
     ca-certificates openssl libssl-dev \
-    autotools-dev libltdl-dev autopoint \
+    autotools-dev libltdl-dev autopoint sudo \
     && apt clean \
     && rm -rf /var/lib/apt/lists \
     && cargo install cargo-c
