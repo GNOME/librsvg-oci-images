@@ -62,7 +62,7 @@ fedora latest:
     ARCH: "amd64"
     DISTRO_NAME: "fedora"
     DISTRO_VER: "latest"
-    DOCKERFILE: "fedora/latest"
+    DOCKERFILE: "fedora/latest.Dockerfile"
     CONTEXT_DIR: "fedora"
   only:
     changes:
@@ -86,7 +86,7 @@ opensuse tumbleweed:
     ARCH: "amd64"
     DISTRO_NAME: "opensuse"
     DISTRO_VER: "tumbleweed"
-    DOCKERFILE: "opensuse/tumbleweed"
+    DOCKERFILE: "opensuse/tumbleweed.Dockerfile"
     CONTEXT_DIR: "opensuse"
   only:
     changes:

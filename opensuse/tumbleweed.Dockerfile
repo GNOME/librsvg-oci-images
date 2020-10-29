@@ -9,8 +9,13 @@ RUN zypper update -y && \
     gtk-doc gobject-introspection-devel gtk3-devel \
     libxml2-devel libcroco-devel cairo-devel \
     pango-devel gdk-pixbuf-devel ccache gettext-tools \
-    sudo shadow system-group-wheel xz && \
-    zypper clean -a
+    sudo shadow system-group-wheel xz
+RUN zypper clean -a
+
+RUN mkdir -p /opt/cargo && \
+    cargo install --root /opt/cargo gitlab_clippy
+
+ENV PATH="${PATH}:/opt/cargo/bin"
 
 # Enable sudo for wheel users
 RUN sed -i -e 's/# %wheel/%wheel/' -e '0,/%wheel/{s/%wheel/# %wheel/}' \

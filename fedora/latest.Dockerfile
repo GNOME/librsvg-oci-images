@@ -8,7 +8,6 @@ RUN dnf upgrade -y && \
     libxml2-devel libcroco-devel cairo-devel pango-devel \
     gettext-devel && \
     dnf install -y https://kojipkgs.fedoraproject.org//packages/rust-cargo-c/0.5.2/3.fc32/x86_64/cargo-c-0.5.2-3.fc32.x86_64.rpm
-
 RUN dnf clean all
 
 # Enable sudo for wheel users

@@ -1,5 +1,7 @@
 FROM debian:testing
 
+ENV SHELL=/bin/bash
+
 RUN apt update -yqq \
     && apt install -yqq --no-install-recommends \
     curl gcc make valac rustc cargo git \
@@ -8,12 +10,13 @@ RUN apt update -yqq \
     gtk-doc-tools libpango1.0-dev libgtk-3-dev \
     libxml2-dev libcroco3-dev libcairo2-dev \
     ca-certificates openssl libssl-dev \
-    autotools-dev libltdl-dev autopoint \
-    && apt clean \
-    && rm -rf /var/lib/apt/lists \
-    && cargo install cargo-c
+    autotools-dev libltdl-dev autopoint
+RUN apt clean && rm -rf /var/lib/apt/lists
 
-ENV SHELL=/bin/bash
+RUN mkdir -p /opt/cargo && \
+    cargo install --root /opt/cargo cargo-c
+
+ENV PATH="${PATH}:/opt/cargo/bin"
 
 ENV HOST_USER_ID 5555
 RUN useradd -u $HOST_USER_ID -ms /bin/bash user
