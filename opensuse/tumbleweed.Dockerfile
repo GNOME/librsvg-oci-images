@@ -13,7 +13,7 @@ RUN zypper update -y && \
 RUN zypper clean -a
 
 RUN mkdir -p /opt/cargo && \
-    cargo install --root /opt/cargo gitlab_clippy
+    cargo install --root /opt/cargo --version ^1.0 gitlab_clippy
 
 ENV PATH="${PATH}:/opt/cargo/bin"
 
