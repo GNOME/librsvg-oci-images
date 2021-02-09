@@ -8,7 +8,7 @@ RUN apt update -yqq \
     automake autoconf libtool gettext itstool \
     libgdk-pixbuf2.0-dev libgirepository1.0-dev \
     gtk-doc-tools libpango1.0-dev libgtk-3-dev \
-    libxml2-dev libcroco3-dev libcairo2-dev \
+    libxml2-dev libcairo2-dev \
     ca-certificates openssl libssl-dev \
     autotools-dev libltdl-dev autopoint
 RUN apt clean && rm -rf /var/lib/apt/lists

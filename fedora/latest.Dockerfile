@@ -5,7 +5,7 @@ RUN dnf upgrade -y && \
     automake autoconf libtool gettext itstool \
     gdk-pixbuf2-devel gobject-introspection-devel \
     gtk-doc git redhat-rpm-config gtk3-devel ccache \
-    libxml2-devel libcroco-devel cairo-devel pango-devel \
+    libxml2-devel cairo-devel pango-devel \
     gettext-devel && \
     dnf install -y https://kojipkgs.fedoraproject.org//packages/rust-cargo-c/0.5.2/3.fc32/x86_64/cargo-c-0.5.2-3.fc32.x86_64.rpm
 RUN dnf clean all

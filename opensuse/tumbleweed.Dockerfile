@@ -7,7 +7,7 @@ RUN zypper update -y && \
     clippy rustfmt gdb rust-gdb rr make vala \
     automake autoconf curl gettext git itstool libtool \
     gtk-doc gobject-introspection-devel gtk3-devel \
-    libxml2-devel libcroco-devel cairo-devel \
+    libxml2-devel cairo-devel \
     pango-devel gdk-pixbuf-devel ccache gettext-tools \
     sudo shadow system-group-wheel xz
 RUN zypper clean -a
