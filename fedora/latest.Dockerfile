@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:32
+FROM registry.fedoraproject.org/fedora:33
 
 RUN dnf upgrade -y && \
     dnf install -y gcc rust rust-std-static cargo make vala \
@@ -7,7 +7,7 @@ RUN dnf upgrade -y && \
     gtk-doc git redhat-rpm-config gtk3-devel ccache \
     libxml2-devel cairo-devel pango-devel \
     gettext-devel && \
-    dnf install -y https://kojipkgs.fedoraproject.org//packages/rust-cargo-c/0.5.2/3.fc32/x86_64/cargo-c-0.5.2-3.fc32.x86_64.rpm
+    dnf install -y https://kojipkgs.fedoraproject.org/packages/rust-cargo-c/0.6.10/2.fc33/x86_64/cargo-c-0.6.10-2.fc33.x86_64.rpm
 RUN dnf clean all
 
 # Enable sudo for wheel users
