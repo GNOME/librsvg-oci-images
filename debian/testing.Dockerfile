@@ -4,13 +4,13 @@ ENV SHELL=/bin/bash
 
 RUN apt update -yqq \
     && apt install -yqq --no-install-recommends \
-    curl gcc make valac rustc cargo git \
-    automake autoconf libtool gettext itstool \
-    libgdk-pixbuf2.0-dev libgirepository1.0-dev \
-    gtk-doc-tools libpango1.0-dev libgtk-3-dev \
-    libxml2-dev libcairo2-dev \
-    ca-certificates openssl libssl-dev \
-    autotools-dev libltdl-dev autopoint
+    curl gcc gdb git make rr valac rustc cargo \
+    automake autoconf autopoint autotools-dev \
+    libtool libltdl-dev gtk-doc-tools \
+    libcairo2-dev libgdk-pixbuf2.0-dev \
+    libgirepository1.0-dev \
+    libpango1.0-dev libgtk-3-dev libxml2-dev \
+    ca-certificates openssl libssl-dev
 RUN apt clean && rm -rf /var/lib/apt/lists
 
 RUN mkdir -p /opt/cargo && \

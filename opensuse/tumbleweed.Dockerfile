@@ -3,12 +3,12 @@ FROM opensuse/tumbleweed
 ENV SHELL=/bin/bash
 
 RUN zypper update -y && \
-    zypper install -y gcc rust cargo cargo-c \
-    clippy rustfmt gdb rust-gdb rr make vala \
-    automake autoconf curl gettext git itstool libtool \
-    gtk-doc gobject-introspection-devel gtk3-devel \
-    libxml2-devel cairo-devel \
-    pango-devel gdk-pixbuf-devel ccache gettext-tools \
+    zypper install -y gcc ccache make vala \
+    rust rustfmt cargo cargo-c clippy \
+    automake autoconf libtool curl git gtk-doc \
+    cairo-devel gdk-pixbuf-devel \
+    gobject-introspection-devel gtk3-devel \
+    pango-devel libxml2-devel \
     sudo shadow system-group-wheel xz
 RUN zypper clean -a
 
